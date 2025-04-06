@@ -9,4 +9,4 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Payments)
 class PaymentsAdmin(admin.ModelAdmin):
-    fields = ("user", "paid_course", "paid_lesson", "payment_amount", "payment_method")
+    fields = ("user", "payment_date", "paid_course", "paid_lesson", "payment_amount", "payment_method")
