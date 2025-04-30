@@ -76,6 +76,12 @@ class Payments(models.Model):
     payment_method = models.CharField(
         max_length=50, verbose_name="Способ оплаты", choices=METHOD_CHOICES
     )
+    session_id = models.CharField(
+        max_length=255, verbose_name="ID сессии", blank=True, null=True
+    )
+    payment_url = models.URLField(
+        max_length=450, verbose_name="Ссылка на оплату", null=True, blank=True
+    )
 
     def __str__(self):
         return f"{self.user} - {self.paid_course if self.paid_course else self.paid_lesson}"
