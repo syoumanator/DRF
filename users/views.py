@@ -50,4 +50,11 @@ class PaymentsCreateAPIView(generics.CreateAPIView):
     queryset = Payments.objects.all()
 
     def perform_create(self, serializer):
-        pass
+        payment = serializer.save()
+        payment.user = self.request.user
+        stripe_product_id = create_stripe_product(payment)
+        price = create_stripe_price(stripe_product_id, payment.payment_amount)
+        session_id, payment_link = create_stripe_session(price)
+        payment.session_id = session_id
+        payment.payment_url = payment_link
+        payment.save()
