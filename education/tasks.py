@@ -2,11 +2,19 @@ from celery import shared_task
 from education.models import Subscription
 from django.core.mail import send_mail
 from config import settings
+from users.models import User
+from django.utils import timezone
+from datetime import timedelta
 
 
 @shared_task
 def last_visit():
-    pass
+    users = User.objects.filter(last_login__isnll=False)
+    for user in users:
+        if timezone.now() - user.last_login > timedelta(days=30):
+            user.is_active = False
+            print(f"Блокировка {user.email}")
+            user.save()
 
 
 @shared_task
