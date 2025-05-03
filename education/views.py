@@ -7,13 +7,13 @@ from education.paginators import EducationPagination
 from education.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
 from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsModerators, IsOwner
+from education.tasks import update_course_mail
 
 
 class CourseViewSet(ModelViewSet):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
     pagination_class = EducationPagination
-
 
     def get_permissions(self):
         if self.action == "create":
@@ -35,6 +35,13 @@ class CourseViewSet(ModelViewSet):
             return Course.objects.all()
         else:
             return Course.objects.filter(owner=self.request.user)
+
+    def perform_update(self, serializer):
+        updated_course = serializer.save()
+        update_course_mail.delay(updated_course)
+        updated_course.save()
+
+
 
 
 class LessonCreateAPIView(generics.CreateAPIView):
