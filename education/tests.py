@@ -15,7 +15,7 @@ class MaterialsAPITestCase(APITestCase):
         self.lesson = Lesson.objects.create(
             title="Test Lesson",
             description="Test Lesson Description",
-            video_url = "https://youtube.com/test",
+            video_url="https://youtube.com/test",
             course=self.course,
             owner=self.user,
         )
@@ -70,12 +70,13 @@ class MaterialsAPITestCase(APITestCase):
 
     def test_update_lessons(self):
         """Изменение урока"""
-        data = {"title": "Updated Lesson",
-                "description": "Updated Lesson Description",
-                "video_url": "https://youtube.com/updated",
-                "course": self.course.pk,
-                "owner": self.user.pk,
-                }
+        data = {
+            "title": "Updated Lesson",
+            "description": "Updated Lesson Description",
+            "video_url": "https://youtube.com/updated",
+            "course": self.course.pk,
+            "owner": self.user.pk,
+        }
         response = self.client.put(f"/lessons/{self.lesson.pk}/update/", data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 

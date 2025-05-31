@@ -3,7 +3,6 @@ from django.db import models
 from education.models import Course, Lesson
 
 
-
 class User(AbstractUser):
     username = None
     email = models.EmailField(

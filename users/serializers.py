@@ -23,4 +23,6 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
     def get_payments(self, instance):
-        return [payment.payment_date for payment in instance.users.filter(user=instance)]
+        return [
+            payment.payment_date for payment in instance.users.filter(user=instance)
+        ]
