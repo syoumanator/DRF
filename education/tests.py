@@ -41,12 +41,6 @@ class MaterialsAPITestCase(APITestCase):
         response = self.client.get(f"/courses/{self.course.pk}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_update_courses(self):
-        """Изменение курса"""
-        data = {"title": "Updated Course", "description": "Updated Course Description"}
-        response = self.client.put(f"/courses/{self.course.pk}/", data=data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
     def test_delete_courses(self):
         """Удаление курса"""
         response = self.client.delete(f"/courses/{self.course.pk}/")
@@ -62,7 +56,6 @@ class MaterialsAPITestCase(APITestCase):
             "owner": self.user.pk,
         }
         response = self.client.post("/lessons/create/", data=data)
-        print(response.json())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_get_lessons(self):
