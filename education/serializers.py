@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from education.models import Course, Lesson, Subscription
 from education.validators import UrlValidator
@@ -34,7 +34,3 @@ class CourseSerializer(ModelSerializer):
     def get_subscription(self, instance):
         user = self.context["request"].user
         return Subscription.objects.filter(user=user).filter(course=instance).exists()
-
-
-
-

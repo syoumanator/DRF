@@ -55,6 +55,9 @@ class Subscription(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь"
     )
     course = models.ForeignKey(
-        Course, on_delete=models.CASCADE, related_name="subscriptions", verbose_name="Курс"
+        Course,
+        on_delete=models.CASCADE,
+        related_name="subscriptions",
+        verbose_name="Курс",
     )
     is_active = models.BooleanField(default=False)
